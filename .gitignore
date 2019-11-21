@@ -12,4 +12,5 @@ mlqm/tests/*
 examples/h2_pes/coulomb/pes/*
 examples/h2_pes/input_gen/h2_pes/*
 examples/multi-species training/pes/*
+examples/design patterns example code/example_pes/*
 

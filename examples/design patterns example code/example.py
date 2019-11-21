@@ -73,4 +73,4 @@ if __name__ == "__main__" :
     plt.plot(pes_x, scf_E, "y-", label="HF PES")
     plt.plot(pes_x, mp2_E, "r-", label = "MP2 PES")
     plt.legend()
-    plt.savefig("example_plot.png")
+    plt.savefig("plot.png")

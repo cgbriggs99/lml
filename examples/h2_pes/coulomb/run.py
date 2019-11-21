@@ -5,8 +5,11 @@ import psi4
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
+import os
 
 def main(**kwargs) :
+    if not os.path.isdir("./pes") :
+        os.mkdir("pes")
     pes = mlqm.PES("pes.json")
     opts = {"basis": pes.basis, "scf_type": "pk", "e_convergence": 1e-8,
             "d_convergence": 1e-8}
