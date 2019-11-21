@@ -29,6 +29,9 @@ Singleton
 DatasetBuilder
     Represents an abstract builder for datasets.
 
+Dataset
+    Wrapper for dict that supports concatenation.
+
 InputGenerator
     Represents an abstract generator that generates input files for
     a specific QC program.
@@ -150,11 +153,53 @@ class DatasetBuilder(Singleton) :
 
         Returns
         -------
-        dict{"setname" : data}
+        dict{"setname" : data} or Dataset{"setname": data}
             The dataset representation of the input data.
         """
         raise NotImplemented
 
+class Dataset(dict) :
+    """
+    Dataset
+
+    Represents a dataset. It is just a wrapper for dict that adds
+    concatenation operations.
+
+    Contributor: Connor Briggs
+
+    Methods
+    -------
+    __init__
+        Wrapper for the superconstructor. Same calls as dict().
+        
+    __add__
+    __iadd__
+    __radd__
+        The concatenation operations.
+    """
+    def __init__(self, *args) :
+        super(*args)
+    
+    def __add__(self, other) :
+        out = {}
+        
+        for i in self.items() :
+            out[i[0]] = i[1]
+        if isinstance(other, dict) :
+            for i in other.items() :
+                out[i[0]] = i[1]
+        else :
+            out[other[0]] = other[1]
+        return out
+    def __iadd__(self, other) :
+        if isinstance(other, dict) :
+            for i in other.items() :
+                self[i[0]] = i[1]
+        else :
+            self[other[0]] = other[1]
+        return self
+    def __radd__(self, other) :
+        return self.__add__(other)
 
     
 class InputGenerator(Singleton) :

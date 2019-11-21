@@ -190,7 +190,7 @@ class Psi4InputGenerator(base.InputGenerator) :
         """
         geoms = molecule.geometry()
         out = f'{molecule.charge()} {molecule.spinstate()}' + \
-              ''.join(f'\n{geoms[i][0]}@{geoms[i][1]} {geoms[i][2]} {geoms[i][3]} {geoms[i][4]}'
+              ''.join(f'\n{geoms[i][0]}@{geoms[i][2]} {geoms[i][3]} {geoms[i][4]} {geoms[i][5]}'
                       for i in range(len(geoms)))
         return out
 
@@ -237,9 +237,8 @@ class Psi4InputGenerator(base.InputGenerator) :
         for mol in molset :
             ndir = directory + f'/{str(mol)}'
             out.append(ndir)
-            if os.path.isfile(ndir + "/input.dat") and ("regen" not in
-                                                        kwargs or not
-                                                        kwargs["regen"]) :
+            if os.path.isfile(ndir + "/input.dat") and \
+               ("regen" not in kwargs or not kwargs["regen"]) :
                 continue
             Psi4InputGenerator.write_psi4_input(
                 Psi4InputGenerator.mol_to_psi4(mol), method, opts,

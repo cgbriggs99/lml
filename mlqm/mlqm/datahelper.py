@@ -145,12 +145,12 @@ def grabber(dlist,fnames=False,varnames=False,outfile='output.json'):
     '''
     rdict = {}
 
-    # Harvesting each result separately for now. Worse for IO, but better for 
-    # result dictionary structure. 
     if fnames:
         for fname in fnames:
             rdict[fname] = {}
-            for dname in dlist:
+        
+        for dname in dlist:
+            for fname in fnames :
                 rdict[fname][dname] = np.load(dname + '/' + fname)
     if varnames:
         for varname in varnames:

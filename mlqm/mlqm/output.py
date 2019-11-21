@@ -219,6 +219,18 @@ class OutputMediator(base.Singleton) :
         with self.__queue_lock :
             for k in self.__listeners :
                 self.__listeners[k].remove(listener)
+
+    @classmethod
+    def getsingleton(cls) :
+        """
+        OutputMediator.getsingleton
+
+        This method is overriden to take into account the possibility of
+        the mediator being shut down but not deleted.
+        """
+        if cls.__singleton == None or not cls.__singleton.__thread.is_active() :
+            cls.__singleton = cls()
+        return cls.__singleton()
         
 
 class Observer :
