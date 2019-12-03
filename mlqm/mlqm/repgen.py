@@ -64,12 +64,13 @@ def make_coulomb(molecule, ignore_matrix_symmetry = True, **kwargs) :
     """
     out = []
     charges = [g[1] for g in molecule.geometry()]
-    coul = [[(charges[k][i] ** 2.4 / 2) if i == j else
-                charges[k][i] * charges[k][j] /
-             np.linalg.norm(np.array(coords[k][i]) -
-                            np.array(coords[k][j]))
-             for j in range(len(charges[k]))] for i in
-            range(len(charges[k]))]
+    coords = [list(g[3:5]) for g in molecule.geometry()]
+    coul = [[(charges[i] ** 2.4 / 2) if i == j else
+                charges[i] * charges[j] /
+             np.linalg.norm(np.array(coords[i]) -
+                            np.array(coords[j]))
+             for j in range(len(charges))] for i in
+            range(len(charges))]
 
     if ignore_matrix_symmetry :
         for r in coul :
