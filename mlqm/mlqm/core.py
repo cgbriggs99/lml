@@ -153,23 +153,23 @@ class PES(object):
                 self.generated = None
                 self.complete = None
                 self.inpf = inp
-                return
-            with open(inp) as f:
-                inpf = json.load(f)
-            self.inpf = inp
-            if 'name' in inpf:
-                self.name = inpf['name'] # Name of PES 
-            else:
-                self.name = 'PES'
-            self.geom = inpf['geom'] # Base geometry
-            self.gvar = inpf['gvar'] # Variable name in geometry
-            self.dis = inpf['dis'] # Displacement range of geometry
-            self.pts = inpf['pts'] # Number of points on PES
-            self.method = inpf['method']
-            self.basis = inpf['basis']
-            self.generated = inpf['generated']
-            self.complete = inpf['complete']
-            print("PES generated from {}.".format(inp))
+            else :
+                with open(inp) as f:
+                    inpf = json.load(f)
+                self.inpf = inp
+                if 'name' in inpf:
+                    self.name = inpf['name'] # Name of PES 
+                else:
+                    self.name = 'PES'
+                self.geom = inpf['geom'] # Base geometry
+                self.gvar = inpf['gvar'] # Variable name in geometry
+                self.dis = inpf['dis'] # Displacement range of geometry
+                self.pts = inpf['pts'] # Number of points on PES
+                self.method = inpf['method']
+                self.basis = inpf['basis']
+                self.generated = inpf['generated']
+                self.complete = inpf['complete']
+                print("PES generated from {}.".format(inp))
         elif isinstance(inp,dict): # if a dict, unpack it to class variables
             self.inpf = None
             if 'name' in inp:
@@ -353,11 +353,14 @@ class Dataset(object):
                      self.inpf = inpf
                      self.setup = None
                      self.data = None
-                with open(inpf,'r') as f:
-                    inp = json.load(f)
-                self.inpf = inpf
-                self.setup = inp['setup']
-                self.data = inp['data']
+                     fd = open(inpf, "w")
+                     fd.close()
+                else :
+                    with open(inpf,'r') as f:
+                        inp = json.load(f)
+                    self.inpf = inpf
+                    self.setup = inp['setup']
+                    self.data = inp['data']
             elif isinstance(inpf,dict):
                 self.inpf = None
                 self.setup = inpf['setup']
